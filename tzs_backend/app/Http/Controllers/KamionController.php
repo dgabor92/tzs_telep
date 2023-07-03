@@ -9,7 +9,16 @@ class KamionController extends Controller
 {
 
     private $validationRules = [];
-    private $fillable = [];
+    private $fillable = [
+        'sofor_neve',
+        'rendszam',
+        'szal_level_szama',
+        'belepes_datuma',
+        'kilepes_datuma',
+        'suly_üres',
+        'suly_tele',
+        'megjegyzes'
+    ];
 
     /**
      * Display a listing of the resource.
@@ -39,6 +48,7 @@ class KamionController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all()); // debugxx
         $request->validate($this->validationRules, []);
         $kamionItem = new Kamion;
         $kamionItem->fill($request->only($this->fillable));
