@@ -1,7 +1,7 @@
 <template>
   <div
     class="container d-flex align-items-center justify-content-center"
-    style="height: 80vh; overflow-y: hidden"
+    style="height: 80vh; overflow-y: hidden !important"
   >
     <div class="row" style="width: 100%">
       <div class="col-md-6">
@@ -38,14 +38,37 @@
           </div>
         </div>
       </div>
+      <div class="col-md-12" v-show="user.role == 1" style="padding: 10px">
+        <div
+          class="card card-md align-items-center border-dark"
+          style="height: 15rem; cursor: pointer"
+          @click="$router.push('/statistic')"
+        >
+          <div
+            class="card-body d-flex flex-column align-items-center justify-content-center"
+          >
+            <h5 class="card-title">Statisztika</h5>
+            <p class="card-text">
+              Erre a kártyára kattintva meg tudod tekinteni a rendszerben lévő
+              járművek statisztikáját.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
+import { mapGetters } from "vuex";
+
 export default {
   middleware: "auth",
+
+  computed: mapGetters({
+    user: "auth/user",
+  }),
 
   // async asyncData () {
   //   const { data: projects } = await axios.get('/api/projects')
