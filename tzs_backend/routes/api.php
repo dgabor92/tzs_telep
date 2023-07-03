@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
     Route::post("kamionok", [KamionController::class, "store"]);
-    Route::update("kamionok", [KamionController::class, "update"]);
+    Route::put("kamionok", [KamionController::class, "update"]);
     Route::delete("kamionok", [KamionController::class, "destroy"]);
     Route::get("allKamionok", [KamionController::class, "index"]);
 });
