@@ -163,7 +163,7 @@ export default {
           return;
         }
       }
-      const { data } = await this.form.post("/api/kamionok");
+      const { data } = await this.form.post("/api/");
       this.form.reset();
       this.$router.push("/home");
     },
