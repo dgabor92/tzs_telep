@@ -7,6 +7,20 @@ use Illuminate\Http\Request;
 
 class VagonController extends Controller
 {
+
+
+    private $validationRules = [
+        'vagon_szama' => 'required',
+        'belepes_datuma' => 'required',
+        'kilepes_datuma' => 'required',
+        'megjegyzes' => 'required'
+    ];
+    private $fillable = [
+        'vagon_szama',
+        'belepes_datuma',
+        'kilepes_datuma',
+        'megjegyzes'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,7 @@ class VagonController extends Controller
      */
     public function index()
     {
-        //
+        return Vagon::all();
     }
 
     /**
@@ -35,7 +49,11 @@ class VagonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validationRules, []);
+        $vagonItem = new Vagon;
+        $vagonItem->fill($request->only($this->fillable));
+        $vagonItem->save();
+        return response()->json($vagonItem, 201);
     }
 
     /**
@@ -46,7 +64,7 @@ class VagonController extends Controller
      */
     public function show(Vagon $vagon)
     {
-        //
+        return $vagon;
     }
 
     /**
@@ -69,7 +87,10 @@ class VagonController extends Controller
      */
     public function update(Request $request, Vagon $vagon)
     {
-        //
+        $id = $request->id;
+        $updaterVagon = Vagon::where("id", $id)
+            ->first()->update($request->only($this->fillable));
+        return response()->json($updaterVagon, 200);
     }
 
     /**
@@ -80,6 +101,11 @@ class VagonController extends Controller
      */
     public function destroy(Vagon $vagon)
     {
-        //
+        $vagon->delete();
+        return response()->json([
+            "success" => true,
+            "message" => "Vagon deleted successfully",
+            "status" => 204
+        ]);
     }
 }

@@ -6,51 +6,17 @@
       <!-- Sofőr neve -->
       <div class="mb-3 row">
         <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Sofőr neve")
+          $t("Vagon Száma")
         }}</label>
         <div class="col-md-7">
           <input
-            v-model="form.sofor_neve"
-            :class="{ 'is-invalid': form.errors.has('sofor_neve') }"
+            v-model="form.vagon_szama"
+            :class="{ 'is-invalid': form.errors.has('vagon_szama') }"
             class="form-control"
             type="text"
-            name="sofor_neve"
+            name="vagon_szama"
           />
-          <has-error :form="form" field="sofor_neve" />
-        </div>
-      </div>
-
-      <!-- Rendszám -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Rendszám")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.rendszam"
-            :class="{ 'is-invalid': form.errors.has('rendszam') }"
-            class="form-control"
-            type="text"
-            name="rendszam"
-          />
-          <has-error :form="form" field="rendszam" />
-        </div>
-      </div>
-
-      <!-- Szállító levél száma -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Szállító levél száma")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.szal_level_szama"
-            :class="{ 'is-invalid': form.errors.has('szal_level_szama') }"
-            class="form-control"
-            type="text"
-            name="szal_level_szama"
-          />
-          <has-error :form="form" field="szal_level_szama" />
+          <has-error :form="form" field="vagon_szama" />
         </div>
       </div>
 
@@ -68,40 +34,6 @@
             name="belepes_datuma"
           />
           <has-error :form="form" field="belepes_datuma" />
-        </div>
-      </div>
-
-      <!-- Súly üresen -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Súly üresen")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.suly_üres"
-            :class="{ 'is-invalid': form.errors.has('suly_üres') }"
-            class="form-control"
-            type="text"
-            name="suly_üres"
-          />
-          <has-error :form="form" field="suly_üres" />
-        </div>
-      </div>
-
-      <!-- Súly tele -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Súly tele")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.suly_tele"
-            :class="{ 'is-invalid': form.errors.has('suly_tele') }"
-            class="form-control"
-            type="text"
-            name="suly_tele"
-          />
-          <has-error :form="form" field="suly_tele" />
         </div>
       </div>
 
@@ -144,13 +76,9 @@ export default {
   data() {
     return {
       form: new Form({
-        sofor_neve: "",
-        rendszam: "",
-        szal_level_szama: "",
+        vagon_szama: "",
         belepes_datuma: new Date().toISOString().substr(0, 10),
         kilepes_datuma: new Date().toISOString().substr(0, 10),
-        suly_üres: "",
-        suly_tele: "",
         megjegyzes: "",
       }),
     };
@@ -163,7 +91,7 @@ export default {
           return;
         }
       }
-      const { data } = await this.form.post("/api/");
+      const { data } = await this.form.post("/api/vagons");
       this.form.reset();
       this.$router.push("/home");
     },

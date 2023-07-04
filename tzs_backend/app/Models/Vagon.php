@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vagon extends Model
 {
     use HasFactory;
+    protected $table = "vagons";
+    protected $guarded = [];
+    protected $hidden = [];
 }

@@ -7,8 +7,20 @@ use Illuminate\Http\Request;
 
 class SzemelygepkocsiController extends Controller
 {
-    private $validationRules = [];
-    private $fillable = [];
+    private $validationRules = [
+        'sofor_neve' => 'required',
+        'rendszam' => 'required',
+        'belepes_datuma' => 'required',
+        'kilepes_datuma' => 'required',
+        'megjegyzes' => 'required'
+    ];
+    private $fillable = [
+        'sofor_neve',
+        'rendszam',
+        'belepes_datuma',
+        'kilepes_datuma',
+        'megjegyzes'
+    ];
 
 
     /**
@@ -39,6 +51,10 @@ class SzemelygepkocsiController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->validationRules, []);
+        $szemelygepkocsiItem = new Szemelygepkocsi;
+        $szemelygepkocsiItem->fill($request->only($this->fillable));
+        $szemelygepkocsiItem->save();
+        return response()->json($szemelygepkocsiItem, 201);
     }
 
     /**

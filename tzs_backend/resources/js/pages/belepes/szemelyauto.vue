@@ -37,23 +37,6 @@
         </div>
       </div>
 
-      <!-- Szállító levél száma -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Szállító levél száma")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.szal_level_szama"
-            :class="{ 'is-invalid': form.errors.has('szal_level_szama') }"
-            class="form-control"
-            type="text"
-            name="szal_level_szama"
-          />
-          <has-error :form="form" field="szal_level_szama" />
-        </div>
-      </div>
-
       <!-- Belépés dátuma -->
       <div class="mb-3 row">
         <label class="col-md-3 col-form-label text-md-end">{{
@@ -68,40 +51,6 @@
             name="belepes_datuma"
           />
           <has-error :form="form" field="belepes_datuma" />
-        </div>
-      </div>
-
-      <!-- Súly üresen -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Súly üresen")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.suly_üres"
-            :class="{ 'is-invalid': form.errors.has('suly_üres') }"
-            class="form-control"
-            type="text"
-            name="suly_üres"
-          />
-          <has-error :form="form" field="suly_üres" />
-        </div>
-      </div>
-
-      <!-- Súly tele -->
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label text-md-end">{{
-          $t("Súly tele")
-        }}</label>
-        <div class="col-md-7">
-          <input
-            v-model="form.suly_tele"
-            :class="{ 'is-invalid': form.errors.has('suly_tele') }"
-            class="form-control"
-            type="text"
-            name="suly_tele"
-          />
-          <has-error :form="form" field="suly_tele" />
         </div>
       </div>
 
@@ -146,11 +95,8 @@ export default {
       form: new Form({
         sofor_neve: "",
         rendszam: "",
-        szal_level_szama: "",
         belepes_datuma: new Date().toISOString().substr(0, 10),
         kilepes_datuma: new Date().toISOString().substr(0, 10),
-        suly_üres: "",
-        suly_tele: "",
         megjegyzes: "",
       }),
     };
@@ -163,7 +109,7 @@ export default {
           return;
         }
       }
-      const { data } = await this.form.post("/api/");
+      const { data } = await this.form.post("/api/szemelygepkocsik");
       this.form.reset();
       this.$router.push("/home");
     },
