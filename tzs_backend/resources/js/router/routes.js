@@ -77,6 +77,11 @@ export default [
     // ],
   },
   {
+    path: "/statistic",
+    name: "statistics",
+    component: page("statistics/index.vue"),
+  },
+  {
     path: "/settings",
     component: page("settings/index.vue"),
     children: [
