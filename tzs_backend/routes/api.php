@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\KamionController;
+use App\Http\Controllers\TeherautoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
     Route::post("kamionok", [KamionController::class, "store"]);
+    Route::post("teherautok", [TeherautoController::class, "store"]);
     Route::put("kamionok", [KamionController::class, "update"]);
     Route::delete("kamionok", [KamionController::class, "destroy"]);
     Route::get("allKamionok", [KamionController::class, "index"]);

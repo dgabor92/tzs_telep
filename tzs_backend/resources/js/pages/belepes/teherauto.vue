@@ -163,7 +163,7 @@ export default {
           return;
         }
       }
-      const { data } = await this.form.post("/api/");
+      const { data } = await this.form.post("/api/teherautok");
       this.form.reset();
       this.$router.push("/home");
     },

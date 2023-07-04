@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Teherauto extends Model
 {
     use HasFactory;
+    protected $table = "teherautos";
+    protected $guarded = [];
+    protected $hidden = [];
 }

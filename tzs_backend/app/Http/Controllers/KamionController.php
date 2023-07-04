@@ -8,7 +8,16 @@ use Illuminate\Http\Request;
 class KamionController extends Controller
 {
 
-    private $validationRules = [];
+    private $validationRules = [
+        'sofor_neve' => 'required',
+        'rendszam' => 'required',
+        'szal_level_szama' => 'required',
+        'belepes_datuma' => 'required',
+        'kilepes_datuma' => 'required',
+        'suly_üres' => 'required',
+        'suly_tele' => 'required',
+        'megjegyzes' => 'required'
+    ];
     private $fillable = [
         'sofor_neve',
         'rendszam',
@@ -48,7 +57,6 @@ class KamionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all()); // debugxx
         $request->validate($this->validationRules, []);
         $kamionItem = new Kamion;
         $kamionItem->fill($request->only($this->fillable));

@@ -8,8 +8,26 @@ use Illuminate\Http\Request;
 class TeherautoController extends Controller
 {
 
-    private $validationRules = [];
-    private $fillable = [];
+    private $validationRules = [
+        'sofor_neve' => 'required',
+        'rendszam' => 'required',
+        'szal_level_szama' => 'required',
+        'belepes_datuma' => 'required',
+        'kilepes_datuma' => 'required',
+        'suly_üres' => 'required',
+        'suly_tele' => 'required',
+        'megjegyzes' => 'required'
+    ];
+    private $fillable = [
+        'sofor_neve',
+        'rendszam',
+        'szal_level_szama',
+        'belepes_datuma',
+        'kilepes_datuma',
+        'suly_üres',
+        'suly_tele',
+        'megjegyzes'
+    ];
 
     /**
      * Display a listing of the resource.
@@ -40,6 +58,10 @@ class TeherautoController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->validationRules, []);
+        $teherautoItem = new Teherauto;
+        $teherautoItem->fill($request->only($this->fillable));
+        $teherautoItem->save();
+        return response()->json($teherautoItem, 201);
     }
 
     /**
