@@ -4,7 +4,7 @@
       <alert-success :form="form" :message="$t('info_updated')" />
 
       <!-- Sofőr neve -->
-      <div class="mb-3 row">
+      <div class="row">
         <label class="col-md-3 col-form-label text-md-end">{{
           $t("Vagon Száma")
         }}</label>
@@ -21,7 +21,7 @@
       </div>
 
       <!-- Belépés dátuma -->
-      <div class="mb-3 row">
+      <div class="row">
         <label class="col-md-3 col-form-label text-md-end">{{
           $t("Belépés dátuma")
         }}</label>
@@ -38,7 +38,7 @@
       </div>
 
       <!-- Megjegyzés -->
-      <div class="mb-3 row">
+      <div class="row">
         <label class="col-md-3 col-form-label text-md-end">{{
           $t("Megjegyzés")
         }}</label>
@@ -55,7 +55,7 @@
       </div>
 
       <!-- Submit Button -->
-      <div class="mb-3 row">
+      <div class="row">
         <div class="col-md-9 ms-md-auto">
           <v-button :loading="form.busy" type="primary">
             {{ $t("Mentés") }}

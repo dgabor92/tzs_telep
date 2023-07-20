@@ -62,19 +62,29 @@ export default [
   {
     path: "/kilepes",
     component: page("kilepes/index.vue"),
-    // children: [
-    //   { path: "", redirect: { name: "settings.profile" } },
-    //   {
-    //     path: "profile",
-    //     name: "settings.profile",
-    //     component: page("settings/profile.vue"),
-    //   },
-    //   {
-    //     path: "password",
-    //     name: "settings.password",
-    //     component: page("settings/password.vue"),
-    //   },
-    // ],
+    children: [
+      { path: "", redirect: { name: "kilepes.kamion" } },
+      {
+        path: "kamion",
+        name: "kilepes.kamion",
+        component: page("kilepes/kamion.vue"),
+      },
+      {
+        path: "teherauto",
+        name: "kilepes.teherauto",
+        component: page("kilepes/teherauto.vue"),
+      },
+      {
+        path: "szemelyauto",
+        name: "kilepes.szemelyauto",
+        component: page("kilepes/szemelyauto.vue"),
+      },
+      {
+        path: "vagon",
+        name: "kilepes.vagon",
+        component: page("kilepes/vagon.vue"),
+      },
+    ],
   },
   {
     path: "/statistic",

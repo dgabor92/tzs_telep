@@ -62,4 +62,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.card-body {
+  padding: 0.5rem !important;
+}
+</style>
