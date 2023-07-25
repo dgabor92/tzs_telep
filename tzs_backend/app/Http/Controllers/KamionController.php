@@ -105,12 +105,13 @@ class KamionController extends Controller
      * @param  \App\Models\Kamion  $kamion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kamion $kamion)
+    public function destroy(Request $request, $id)
     {
-        $kamion->delete();
+        $item = Kamion::where('id', $id)->first();
+        $item->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Kamion deleted successfully',
+            'message' => 'Item deleted successfully',
             'status' => 204
         ]);
     }

@@ -97,9 +97,10 @@ class VagonController extends Controller
      * @param  \App\Models\Vagon  $vagon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vagon $vagon)
+    public function destroy(Request $request, $id)
     {
-        $vagon->delete();
+        $item = Vagon::where("id", $id)->first();
+        $item->delete();
         return response()->json([
             "success" => true,
             "message" => "Vagon deleted successfully",

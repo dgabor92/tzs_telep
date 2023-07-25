@@ -98,9 +98,10 @@ class SzemelygepkocsiController extends Controller
      * @param  \App\Models\Szemelygepkocsi  $szemelygepkocsi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Szemelygepkocsi $szemelygepkocsi)
+    public function destroy(Request $request, $id)
     {
-        $szemelygepkocsi->delete();
+        $item = Szemelygepkocsi::where('id', $id)->first();
+        $item->delete();
         return response()->json([
             'success' => true,
             'message' => 'Személygépkocsi deleted successfully',

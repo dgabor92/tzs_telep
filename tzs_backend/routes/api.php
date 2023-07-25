@@ -41,7 +41,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put("teherautok", [TeherautoController::class, "update"]);
     Route::put("szemelyautok", [SzemelygepkocsiController::class, "update"]);
     Route::put("vagons", [VagonController::class, "update"]);
-    Route::delete("kamionok", [KamionController::class, "destroy"]);
+    Route::delete("kamionok/{id}", [KamionController::class, "destroy"]);
+    Route::delete("teherauto/{id}", [TeherautoController::class, "destroy"]);
+    Route::delete("szemelyauto/{id}", [SzemelygepkocsiController::class, "destroy"]);
+    Route::delete("vagon/{id}", [VagonController::class, "destroy"]);
     Route::get("allKamionok", [KamionController::class, "index"]);
     Route::get("allTeherautok", [TeherautoController::class, "index"]);
     Route::get("allSzemelygepkocsik", [SzemelygepkocsiController::class, "index"]);

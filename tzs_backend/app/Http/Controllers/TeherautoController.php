@@ -105,9 +105,10 @@ class TeherautoController extends Controller
      * @param  \App\Models\Teherauto  $teherauto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teherauto $teherauto)
+    public function destroy(Request $request, $id)
     {
-        $teherauto->delete();
+        $item = Teherauto::where('id', $id)->first();
+        $item->delete();
         return response()->json([
             'success' => true,
             'message' => 'Teherauto deleted successfully',

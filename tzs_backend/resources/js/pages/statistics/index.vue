@@ -13,6 +13,10 @@
                         <template v-slot:top>
                             <v-toolbar flat><v-toolbar-title>Összes Kamion</v-toolbar-title> </v-toolbar>
                         </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showRemove(item, 'kamionok')"> X </v-btn>
+                        </template>
                     </v-data-table>
                 </div>
             </v-tab-item>
@@ -27,6 +31,10 @@
                     >
                         <template v-slot:top>
                             <v-toolbar flat><v-toolbar-title>Összes Teherautó</v-toolbar-title> </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showRemove(item, 'teherauto')"> X </v-btn>
                         </template>
                     </v-data-table>
                 </div>
@@ -43,6 +51,10 @@
                         <template v-slot:top>
                             <v-toolbar flat><v-toolbar-title>Összes Személyautó</v-toolbar-title> </v-toolbar>
                         </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showRemove(item, 'szemelyauto')"> X </v-btn>
+                        </template>
                     </v-data-table>
                 </div>
             </v-tab-item>
@@ -52,10 +64,27 @@
                         <template v-slot:top>
                             <v-toolbar flat><v-toolbar-title>Összes Vagon</v-toolbar-title> </v-toolbar>
                         </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showRemove(item, 'vagon')"> X </v-btn>
+                        </template>
                     </v-data-table>
                 </div>
             </v-tab-item>
         </v-tabs-items>
+        <div v-if="removeDialog" class="dialog">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Biztosan törölni szeretnéd az adott sort?</span>
+                </v-card-title>
+
+                <v-card-actions>
+                    <div class="flex-grow-1" />
+                    <v-btn color="blue darken-1" text @click="remove"> Yes </v-btn>
+                    <v-btn color="blue darken-1" text @click="closeR"> No </v-btn>
+                </v-card-actions>
+            </v-card>
+        </div>
     </div>
 </template>
 <script>
@@ -75,6 +104,9 @@ export default {
             ],
             currmaintab: 'kamionom',
             kamions: [],
+            removeDialog: false,
+            removeItem: null,
+            removetype: null,
             szemelyautos: [],
             teherautos: [],
             vagons: [],
@@ -94,6 +126,7 @@ export default {
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
                 { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
+                { text: 'Actions', value: 'actions' },
                 { text: '', value: 'data-table-expand' },
             ]
         },
@@ -106,6 +139,7 @@ export default {
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
                 { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
+                { text: 'Actions', value: 'actions' },
                 { text: '', value: 'data-table-expand' },
             ]
         },
@@ -118,6 +152,7 @@ export default {
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
                 { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
+                { text: 'Actions', value: 'actions' },
                 { text: '', value: 'data-table-expand' },
             ]
         },
@@ -128,10 +163,12 @@ export default {
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
                 { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
+                { text: 'Actions', value: 'actions' },
                 { text: '', value: 'data-table-expand' },
             ]
         },
     },
+    watch: {},
     mounted() {
         this.getKamionsData()
         this.getTeherautosData()
@@ -139,6 +176,29 @@ export default {
         this.getAllVagonData()
     },
     methods: {
+        async remove() {
+            try {
+                const response = await axios.delete(`/api/${this.removetype}/${this.removeItem.id}`)
+                if (response.status === 204) {
+                }
+            } catch (error) {
+                console.log(error)
+            }
+            this.removeDialog = false
+            //refresh the data
+            this.getKamionsData()
+            this.getTeherautosData()
+            this.getAllSzemelyautoData()
+            this.getAllVagonData()
+        },
+        showRemove(item, type) {
+            this.removeDialog = true
+            this.removeItem = item
+            this.removetype = type
+        },
+        closeR() {
+            this.removeDialog = false
+        },
         goBack() {
             this.$router.go(-1)
         },
@@ -173,4 +233,50 @@ export default {
     },
 }
 </script>
-<style lang=""></style>
+<style scoped>
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 400px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    z-index: 9999;
+}
+
+.dialog::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-bottom-color: white;
+}
+
+.dialog::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: white;
+}
+
+@media (max-width: 768px) {
+    .dialog {
+        min-width: 90%;
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .dialog::before,
+    .dialog::after {
+        display: none;
+    }
+}
+</style>

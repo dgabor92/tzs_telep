@@ -110,9 +110,9 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-7">
                             <button class="btn btn-secondary mr-2" type="button" @click="closeDialog">
-                                {{ $t('Cancel') }}
+                                {{ $t('Mégse') }}
                             </button>
-                            <button class="btn btn-primary" type="submit">{{ $t('Save') }}</button>
+                            <button class="btn btn-primary" type="submit">{{ $t('Mentés') }}</button>
                         </div>
                     </div>
                 </form>
