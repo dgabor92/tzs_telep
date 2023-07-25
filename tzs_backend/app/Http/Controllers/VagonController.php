@@ -87,7 +87,7 @@ class VagonController extends Controller
     {
         $id = $request->id;
         $updaterVagon = Vagon::where("id", $id)
-            ->first()->update($request->only($this->fillable));
+            ->first()->update($request->all());
         return response()->json($updaterVagon, 200);
     }
 

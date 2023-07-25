@@ -88,7 +88,7 @@ class SzemelygepkocsiController extends Controller
     {
         $id = $szemelygepkocsi->id;
         $updateSzemely = Szemelygepkocsi::where('id', $id)
-            ->first()->update($request->only($this->fillable));
+            ->first()->update($request->all());
         return response()->json($updateSzemely, 200);
     }
 

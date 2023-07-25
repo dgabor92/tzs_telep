@@ -95,7 +95,7 @@ class KamionController extends Controller
     {
         $id = $request->id;
         $updateKamion = Kamion::where('id', $id)
-            ->first()->update($request->only($this->fillable));
+            ->first()->update($request->all());
         return response()->json($updateKamion, 200);
     }
 

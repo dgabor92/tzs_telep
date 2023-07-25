@@ -91,6 +91,7 @@ export default {
                 { text: 'Rendszám', value: 'rendszam' },
                 { text: 'Száll. Levél', value: 'szal_level_szama' },
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
+                { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
                 { text: '', value: 'data-table-expand' },
             ]
@@ -102,6 +103,7 @@ export default {
                 { text: 'Rendszám', value: 'rendszam' },
                 { text: 'Száll. Levél', value: 'szal_level_szama' },
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
+                { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
                 { text: '', value: 'data-table-expand' },
             ]
@@ -113,6 +115,7 @@ export default {
                 { text: 'Rendszám', value: 'rendszam' },
                 // { text: 'Száll. Levél', value: 'szal_level_szama' },
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
+                { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
                 { text: '', value: 'data-table-expand' },
             ]
@@ -122,6 +125,7 @@ export default {
                 { text: 'ID', value: 'id', align: 'start', sortable: false },
                 { text: 'Vagon száma', value: 'vagon_szama' },
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
+                { text: 'Kilépés ideje', value: 'kilepes_datuma' },
                 { text: 'Megjegyzés', value: 'megjegyzes' },
                 { text: '', value: 'data-table-expand' },
             ]

@@ -95,7 +95,7 @@ class TeherautoController extends Controller
     {
         $id = $request->id;
         $updateTeherauto = Teherauto::where('id', $id)
-            ->first()->update($request->only($this->fillable));
+            ->first()->update($request->all());
         return response()->json($updateTeherauto, 200);
     }
 
