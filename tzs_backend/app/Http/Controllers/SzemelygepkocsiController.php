@@ -86,7 +86,7 @@ class SzemelygepkocsiController extends Controller
      */
     public function update(Request $request, Szemelygepkocsi $szemelygepkocsi)
     {
-        $id = $szemelygepkocsi->id;
+        $id = $request->id;
         $updateSzemely = Szemelygepkocsi::where('id', $id)
             ->first()->update($request->all());
         return response()->json($updateSzemely, 200);

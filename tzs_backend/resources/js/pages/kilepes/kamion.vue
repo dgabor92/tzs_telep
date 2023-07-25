@@ -156,7 +156,6 @@ export default {
             this.selectedItem = item
         },
         async updateItem(item) {
-            console.log(this.selectedItem, 'item')
             for (const key in this.selectedItem) {
                 if (this.selectedItem[key] === '' || this.selectedItem[key] === null) {
                     alert('Minden mezőt ki kell tölteni!')
@@ -164,8 +163,6 @@ export default {
                 }
             }
             const { data } = await axios.put(`/api/kamionok`, this.selectedItem)
-            // const { data } = await this.form.post('/api/kamionok')
-            // this.selectedItem.reset()
             this.$router.push('/home')
         },
         getKamions() {

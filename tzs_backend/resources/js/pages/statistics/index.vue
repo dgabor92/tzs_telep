@@ -5,6 +5,7 @@
                 {{ datab.label }}</v-tab
             >
         </v-tabs>
+
         <v-tabs-items v-model="currmaintab">
             <v-tab-item value="kamionok">
                 <div>
@@ -86,7 +87,7 @@ export default {
     computed: {
         kamionheaders() {
             return [
-                { text: 'ID', value: 'id', align: 'start', sortable: false },
+                // { text: 'ID', value: 'id', align: 'start', sortable: false },
                 { text: 'Sofőr neve', value: 'sofor_neve' },
                 { text: 'Rendszám', value: 'rendszam' },
                 { text: 'Száll. Levél', value: 'szal_level_szama' },
@@ -98,7 +99,7 @@ export default {
         },
         teherautoheaders() {
             return [
-                { text: 'ID', value: 'id', align: 'start', sortable: false },
+                // { text: 'ID', value: 'id', align: 'start', sortable: false },
                 { text: 'Sofőr neve', value: 'sofor_neve' },
                 { text: 'Rendszám', value: 'rendszam' },
                 { text: 'Száll. Levél', value: 'szal_level_szama' },
@@ -110,7 +111,7 @@ export default {
         },
         szemelyautoheaders() {
             return [
-                { text: 'ID', value: 'id', align: 'start', sortable: false },
+                // { text: 'ID', value: 'id', align: 'start', sortable: false },
                 { text: 'Sofőr neve', value: 'sofor_neve' },
                 { text: 'Rendszám', value: 'rendszam' },
                 // { text: 'Száll. Levél', value: 'szal_level_szama' },
@@ -122,7 +123,7 @@ export default {
         },
         vagonheaders() {
             return [
-                { text: 'ID', value: 'id', align: 'start', sortable: false },
+                // { text: 'ID', value: 'id', align: 'start', sortable: false },
                 { text: 'Vagon száma', value: 'vagon_szama' },
                 { text: 'Belépés ideje', value: 'belepes_datuma' },
                 { text: 'Kilépés ideje', value: 'kilepes_datuma' },
@@ -138,6 +139,9 @@ export default {
         this.getAllVagonData()
     },
     methods: {
+        goBack() {
+            this.$router.go(-1)
+        },
         maintabchanged() {
             console.log('maintabchanged')
         },

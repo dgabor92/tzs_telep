@@ -38,6 +38,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post("szemelygepkocsik", [SzemelygepkocsiController::class, "store"]);
     Route::post("vagons", [VagonController::class, "store"]);
     Route::put("kamionok", [KamionController::class, "update"]);
+    Route::put("teherautok", [TeherautoController::class, "update"]);
+    Route::put("szemelyautok", [SzemelygepkocsiController::class, "update"]);
+    Route::put("vagons", [VagonController::class, "update"]);
     Route::delete("kamionok", [KamionController::class, "destroy"]);
     Route::get("allKamionok", [KamionController::class, "index"]);
     Route::get("allTeherautok", [TeherautoController::class, "index"]);
