@@ -12,13 +12,11 @@ class VagonController extends Controller
     private $validationRules = [
         'vagon_szama' => 'required',
         'belepes_datuma' => 'required',
-        'kilepes_datuma' => 'required',
         'megjegyzes' => 'required'
     ];
     private $fillable = [
         'vagon_szama',
         'belepes_datuma',
-        'kilepes_datuma',
         'megjegyzes'
     ];
     /**

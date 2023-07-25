@@ -40,6 +40,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put("kamionok", [KamionController::class, "update"]);
     Route::delete("kamionok", [KamionController::class, "destroy"]);
     Route::get("allKamionok", [KamionController::class, "index"]);
+    Route::get("allTeherautok", [TeherautoController::class, "index"]);
+    Route::get("allSzemelygepkocsik", [SzemelygepkocsiController::class, "index"]);
+    Route::get("allVagons", [VagonController::class, "index"]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

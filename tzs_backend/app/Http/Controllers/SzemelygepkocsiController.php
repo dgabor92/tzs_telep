@@ -11,14 +11,12 @@ class SzemelygepkocsiController extends Controller
         'sofor_neve' => 'required',
         'rendszam' => 'required',
         'belepes_datuma' => 'required',
-        'kilepes_datuma' => 'required',
         'megjegyzes' => 'required'
     ];
     private $fillable = [
         'sofor_neve',
         'rendszam',
         'belepes_datuma',
-        'kilepes_datuma',
         'megjegyzes'
     ];
 

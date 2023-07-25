@@ -13,7 +13,6 @@ class TeherautoController extends Controller
         'rendszam' => 'required',
         'szal_level_szama' => 'required',
         'belepes_datuma' => 'required',
-        'kilepes_datuma' => 'required',
         'suly_üres' => 'required',
         'suly_tele' => 'required',
         'megjegyzes' => 'required'
@@ -23,7 +22,6 @@ class TeherautoController extends Controller
         'rendszam',
         'szal_level_szama',
         'belepes_datuma',
-        'kilepes_datuma',
         'suly_üres',
         'suly_tele',
         'megjegyzes'

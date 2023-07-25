@@ -12,7 +12,7 @@ $config = [
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-  <link rel="icon" href="/images/disneyplus.png">
+  {{-- <link rel="icon" href="/images/disneyplus.png"> --}}
   <title>{{ config('app.name') }}</title>
 
 </head>
