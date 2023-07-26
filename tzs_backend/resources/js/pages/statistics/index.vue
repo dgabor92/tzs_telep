@@ -6,7 +6,7 @@
             >
         </v-tabs>
 
-        <v-tabs-items v-model="currmaintab">
+        <v-tabs-items v-model="currmaintab" class="tabs">
             <v-tab-item value="kamionok">
                 <div>
                     <v-data-table dense :headers="kamionheaders" :items="kamions" item-key="id" :options="options">
@@ -14,7 +14,7 @@
                             <v-toolbar flat><v-toolbar-title>Összes Kamion</v-toolbar-title> </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
-                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showEdit(item, 'kamionok')"> EDIT </v-btn>
                             <v-btn small @click="showRemove(item, 'kamionok')"> X </v-btn>
                         </template>
                     </v-data-table>
@@ -33,7 +33,7 @@
                             <v-toolbar flat><v-toolbar-title>Összes Teherautó</v-toolbar-title> </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
-                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showEdit(item, 'teherautok')"> EDIT </v-btn>
                             <v-btn small @click="showRemove(item, 'teherauto')"> X </v-btn>
                         </template>
                     </v-data-table>
@@ -52,7 +52,7 @@
                             <v-toolbar flat><v-toolbar-title>Összes Személyautó</v-toolbar-title> </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
-                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showEdit(item, 'szemelyautok')"> EDIT </v-btn>
                             <v-btn small @click="showRemove(item, 'szemelyauto')"> X </v-btn>
                         </template>
                     </v-data-table>
@@ -65,7 +65,7 @@
                             <v-toolbar flat><v-toolbar-title>Összes Vagon</v-toolbar-title> </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
-                            <v-btn small @click="showEdit(item)"> EDIT </v-btn>
+                            <v-btn small @click="showEdit(item, 'vagons')"> EDIT </v-btn>
                             <v-btn small @click="showRemove(item, 'vagon')"> X </v-btn>
                         </template>
                     </v-data-table>
@@ -82,6 +82,28 @@
                     <div class="flex-grow-1" />
                     <v-btn color="blue darken-1" text @click="remove"> Yes </v-btn>
                     <v-btn color="blue darken-1" text @click="closeR"> No </v-btn>
+                </v-card-actions>
+            </v-card>
+        </div>
+        <div v-if="editDialog" class="editDialog">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Biztosan változtatni szeretnéd az adott sort?</span>
+                </v-card-title>
+
+                <v-card-body>
+                    <div class="row" v-for="(value, key) in editItem" :key="key.id">
+                        <label class="col-md-3 col-form-label text-md-end">{{ key }}</label>
+                        <div class="col-md-7">
+                            <input v-model="editItem[key]" class="form-control" type="text" name="key" />
+                        </div>
+                    </div>
+                </v-card-body>
+
+                <v-card-actions>
+                    <div class="flex-grow-1" />
+                    <v-btn color="blue darken-1" text @click="edit"> Yes </v-btn>
+                    <v-btn color="blue darken-1" text @click="closeE"> No </v-btn>
                 </v-card-actions>
             </v-card>
         </div>
@@ -105,8 +127,11 @@ export default {
             currmaintab: 'kamionom',
             kamions: [],
             removeDialog: false,
+            editDialog: false,
+            editItem: null,
+            editType: null,
             removeItem: null,
-            removetype: null,
+            removeType: null,
             szemelyautos: [],
             teherautos: [],
             vagons: [],
@@ -178,13 +203,28 @@ export default {
     methods: {
         async remove() {
             try {
-                const response = await axios.delete(`/api/${this.removetype}/${this.removeItem.id}`)
+                const response = await axios.delete(`/api/${this.removeType}/${this.removeItem.id}`)
                 if (response.status === 204) {
                 }
             } catch (error) {
                 console.log(error)
             }
             this.removeDialog = false
+            document.body.classList.remove('blurOverlay')
+            //refresh the data
+            this.getKamionsData()
+            this.getTeherautosData()
+            this.getAllSzemelyautoData()
+            this.getAllVagonData()
+        },
+        async edit() {
+            try {
+                const response = await axios.put(`/api/${this.editType}`, this.editItem)
+            } catch (error) {
+                console.log(error)
+            }
+            this.editDialog = false
+            document.body.classList.remove('blurOverlay')
             //refresh the data
             this.getKamionsData()
             this.getTeherautosData()
@@ -192,12 +232,29 @@ export default {
             this.getAllVagonData()
         },
         showRemove(item, type) {
+            document.body.classList.add('blurOverlay')
             this.removeDialog = true
             this.removeItem = item
-            this.removetype = type
+            this.removeType = type
+        },
+        showEdit(item, type) {
+            document.body.classList.add('blurOverlay')
+            this.editDialog = true
+            // this.editItem = item
+            //add everything to editItem except id, created_at, updated_at
+            this.editItem = Object.assign({}, item)
+            delete this.editItem.id
+            delete this.editItem.created_at
+            delete this.editItem.updated_at
+            this.editType = type
+        },
+        closeE() {
+            this.editDialog = false
+            document.body.classList.remove('blurOverlay')
         },
         closeR() {
             this.removeDialog = false
+            document.body.classList.remove('blurOverlay')
         },
         goBack() {
             this.$router.go(-1)
@@ -234,6 +291,10 @@ export default {
 }
 </script>
 <style scoped>
+.blurOverlay .tabs {
+    -webkit-filter: blur(8px);
+    filter: blur(2px);
+}
 .dialog {
     position: fixed;
     top: 50%;
@@ -278,5 +339,39 @@ export default {
     .dialog::after {
         display: none;
     }
+}
+.editDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 1200px;
+    max-height: 700px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    z-index: 9999;
+    /* overflow-y: auto; */
+}
+
+.editDialog::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-bottom-color: white;
+}
+
+.editDialog::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: white;
 }
 </style>
