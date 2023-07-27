@@ -207,11 +207,28 @@ export default {
     border-top-color: white;
 }
 
+@media (max-width: 1225px) {
+    .dialog {
+        height: -webkit-fill-available;
+        min-width: 90%;
+        max-width: 90%;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    .dialog::before,
+    .dialog::after {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .dialog {
+        height: -webkit-fill-available;
         min-width: 90%;
         max-width: 90%;
         padding: 10px;
+        overflow-x: hidden;
     }
 
     .dialog::before,

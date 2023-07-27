@@ -1,7 +1,7 @@
 <template>
     <div class="vld-parent">
         <loading :active.sync="isLoading" :can-cancel="true" :opacity="0.8" :is-full-page="false" />
-        <card :title="$t('Kamion_info')">
+        <card :title="$t('Kamion_info')" class="tabs">
             <v-list-item v-for="item in filteredKamions" :key="item.id" link>
                 <v-list-item-content @click="showDialog(item)">
                     {{ item.rendszam }} - {{ item.sofor_neve }}
@@ -149,10 +149,12 @@ export default {
     methods: {
         closeDialog() {
             this.dialog = false
+            document.body.classList.remove('blurOverlay')
         },
         showDialog(item) {
             // Set the dialog property to true to show the dialog
             this.dialog = !this.dialog
+            document.body.classList.add('blurOverlay')
             this.selectedItem = item
         },
         async updateItem(item) {
@@ -163,6 +165,7 @@ export default {
                 }
             }
             const { data } = await axios.put(`/api/kamionok`, this.selectedItem)
+            document.body.classList.remove('blurOverlay')
             this.$router.push('/home')
         },
         getKamions() {
@@ -175,6 +178,10 @@ export default {
 }
 </script>
 <style scoped>
+.blurOverlay {
+    -webkit-filter: blur(8px);
+    filter: blur(2px);
+}
 .dialog {
     position: fixed;
     top: 50%;
@@ -209,10 +216,27 @@ export default {
     border-top-color: white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1225px) {
     .dialog {
+        height: -webkit-fill-available;
         min-width: 90%;
         max-width: 90%;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    .dialog::before,
+    .dialog::after {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .dialog {
+        height: -webkit-fill-available;
+        min-width: 90%;
+        max-width: 90%;
+        overflow-x: hidden;
         padding: 10px;
     }
 

@@ -86,26 +86,39 @@
             </v-card>
         </div>
         <div v-if="editDialog" class="editDialog">
-            <v-card>
-                <v-card-title>
-                    <span class="headline">Biztosan változtatni szeretnéd az adott sort?</span>
-                </v-card-title>
+            <div class="dialog-header">
+                <h2 class="dialog-title">{{ editItem.rendszam }} Kamion adatai</h2>
+            </div>
 
-                <v-card-body>
-                    <div class="row" v-for="(value, key) in editItem" :key="key.id">
-                        <label class="col-md-3 col-form-label text-md-end">{{ key }}</label>
-                        <div class="col-md-7">
-                            <input v-model="editItem[key]" class="form-control" type="text" name="key" />
+            <div class="dialog-body pt-2">
+                <form @submit.prevent="edit">
+                    <alert-success :form="editItem" :message="$t('info_updated')" />
+                    <div v-for="(value, key) in editItem" :key="key">
+                        <div class="row">
+                            <label class="col-md-3 col-form-label text-md-end">{{ key }}</label>
+                            <div class="col-md-7">
+                                <input
+                                    v-model="editItem[key]"
+                                    class="form-control"
+                                    :name="editItem[key]"
+                                    :readonly="key === 'id'"
+                                />
+                            </div>
                         </div>
                     </div>
-                </v-card-body>
 
-                <v-card-actions>
-                    <div class="flex-grow-1" />
-                    <v-btn color="blue darken-1" text @click="edit"> Yes </v-btn>
-                    <v-btn color="blue darken-1" text @click="closeE"> No </v-btn>
-                </v-card-actions>
-            </v-card>
+                    <!-- Cancel and Submit buttons -->
+                    <div class="form-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <button class="btn btn-secondary mr-2" type="button" @click="closeE">
+                                {{ $t('Mégse') }}
+                            </button>
+                            <button class="btn btn-primary" type="submit">{{ $t('Mentés') }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -142,6 +155,21 @@ export default {
         }
     },
     computed: {
+        isReadOnly() {
+            return this.editItem[this.key] === 'id'
+        },
+        inputType() {
+            switch (typeof this.editItem[this.key]) {
+                case 'number':
+                    return 'number'
+                case 'string':
+                    return 'text'
+                case 'date':
+                    return 'date'
+                default:
+                    return 'text'
+            }
+        },
         kamionheaders() {
             return [
                 // { text: 'ID', value: 'id', align: 'start', sortable: false },
@@ -218,6 +246,12 @@ export default {
             this.getAllVagonData()
         },
         async edit() {
+            for (const key in this.editItem) {
+                if (this.editItem[key] === '' || this.editItem[key] === null) {
+                    alert('Minden mezőt ki kell tölteni!')
+                    return
+                }
+            }
             try {
                 const response = await axios.put(`/api/${this.editType}`, this.editItem)
             } catch (error) {
@@ -242,8 +276,9 @@ export default {
             this.editDialog = true
             // this.editItem = item
             //add everything to editItem except id, created_at, updated_at
+
             this.editItem = Object.assign({}, item)
-            delete this.editItem.id
+            // hide id, created_at, updated_at without delete them
             delete this.editItem.created_at
             delete this.editItem.updated_at
             this.editType = type
@@ -259,9 +294,7 @@ export default {
         goBack() {
             this.$router.go(-1)
         },
-        maintabchanged() {
-            console.log('maintabchanged')
-        },
+        maintabchanged() {},
         getKamionsData() {
             axios.get('/api/allKamionok').then((response) => {
                 // desc order
@@ -373,5 +406,35 @@ export default {
     transform: translateX(-50%);
     border: 10px solid transparent;
     border-top-color: white;
+}
+
+@media (max-width: 1225px) {
+    .editDialog {
+        height: -webkit-fill-available;
+        min-width: 90%;
+        max-width: 90%;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    .editDialog::before,
+    .editDialog::after {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .editDialog {
+        height: -webkit-fill-available;
+        min-width: 90%;
+        max-width: 90%;
+        padding: 10px;
+        overflow-x: hidden;
+    }
+
+    .editDialog::before,
+    .editDialog::after {
+        display: none;
+    }
 }
 </style>
