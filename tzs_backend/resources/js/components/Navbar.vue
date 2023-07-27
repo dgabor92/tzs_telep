@@ -107,7 +107,7 @@ export default {
     },
     mounted() {
         // var that = this
-        this.userRole = this.user.role
+        this.userRole = this.user?.role
         /* setTimeout(function(){
       axios.get("/api/getActiveNum?id="+that.currCountry).then(
         response => {
