@@ -13,6 +13,7 @@ use App\Http\Controllers\KamionController;
 use App\Http\Controllers\TeherautoController;
 use App\Http\Controllers\SzemelygepkocsiController;
 use App\Http\Controllers\VagonController;
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get("allTeherautok", [TeherautoController::class, "index"]);
     Route::get("allSzemelygepkocsik", [SzemelygepkocsiController::class, "index"]);
     Route::get("allVagons", [VagonController::class, "index"]);
+    Route::get("getExcelExport", [ExportController::class, "getExcelExport"]);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
