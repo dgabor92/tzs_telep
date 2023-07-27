@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\ColumnDimension;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
@@ -93,5 +94,9 @@ class VagonSheet implements FromCollection, WithTitle, WithHeadings, WithStyles
 
     $sheet->getStyle('A1:G1')->applyFromArray($headerStyleArray);
     $sheet->getStyle('A2:G' . ($this->collection()->count() + 1))->applyFromArray($bodyStyleArray);
+
+    foreach (range('A', 'H') as $column) {
+      $sheet->getColumnDimension($column)->setAutoSize(true);
+    }
   }
 }

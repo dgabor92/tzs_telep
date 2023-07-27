@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\ColumnDimension;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
@@ -95,5 +96,9 @@ class SzemelygepkocsiSheet implements FromCollection, WithTitle, WithHeadings, W
 
     $sheet->getStyle('A1:H1')->applyFromArray($headerStyleArray);
     $sheet->getStyle('A2:H' . ($this->collection()->count() + 1))->applyFromArray($bodyStyleArray);
+
+    foreach (range('A', 'I') as $column) {
+      $sheet->getColumnDimension($column)->setAutoSize(true);
+    }
   }
 }
