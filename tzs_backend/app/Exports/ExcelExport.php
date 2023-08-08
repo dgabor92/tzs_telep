@@ -24,56 +24,6 @@ class ExcelExport implements WithMultipleSheets
   {
   }
 
-
-  // public function view(): View
-  // {
-  //   $kamionok = Kamion::all()->toArray();
-  //   $teherautok = Teherauto::all()->toArray();
-  //   $szemelygepkocsik = Szemelygepkocsi::all()->toArray();
-  //   $vagonok = Vagon::all()->toArray();
-
-  //   $result = [];
-  //   foreach ($kamionok as $kamion) {
-  //     $result['kamionok'][] = $kamion;
-  //   }
-  //   foreach ($teherautok as $teherauto) {
-  //     $result['teherautok'][] = $teherauto;
-  //   }
-  //   foreach ($szemelygepkocsik as $szemelygepkocsi) {
-  //     $result['szemelygepkocsik'][] = $szemelygepkocsi;
-  //   }
-  //   foreach ($vagonok as $vagon) {
-  //     $result['vagonok'][] = $vagon;
-  //   }
-
-  //   return view('exports.export_excel', [
-  //     'result' => $result
-  //   ]);
-  // }
-
-  // function download()
-  // {
-  //   $kamionok = Kamion::all()->toArray();
-  //   $teherautok = Teherauto::all()->toArray();
-  //   $szemelygepkocsik = Szemelygepkocsi::all()->toArray();
-  //   $vagonok = Vagon::all()->toArray();
-
-  //   $result = [];
-  //   foreach ($kamionok as $kamion) {
-  //     $result['kamionok'][] = $kamion;
-  //   }
-  //   foreach ($teherautok as $teherauto) {
-  //     $result['teherautok'][] = $teherauto;
-  //   }
-  //   foreach ($szemelygepkocsik as $szemelygepkocsi) {
-  //     $result['szemelygepkocsik'][] = $szemelygepkocsi;
-  //   }
-  //   foreach ($vagonok as $vagon) {
-  //     $result['vagonok'][] = $vagon;
-  //   }
-
-  //   return Excel::download(new ExcelExportView($result), 'export.xlsx');
-  // }
   public function sheets(): array
   {
     $kamionok = Kamion::all()->toArray();
