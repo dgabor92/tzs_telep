@@ -22,13 +22,32 @@ class UserSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        $password = Hash::make('password');
+        // $password = Hash::make('password');
 
-        User::create([
-            'name' => 'Admin',
-            'email' => 'super@admin.com',
-            'password' => $password,
-            'role' => '1',
-        ]);
+        // User::create([
+        //     'name' => 'Admin',
+        //     'email' => 'super@admin.com',
+        //     'password' => $password,
+        //     'role' => '1',
+        // ]);
+        $users = ['admin', 'beata', 'porta1'];
+
+        function createRole($user)
+        {
+            if ($user == 'admin' || $user == 'beata') {
+                return '1';
+            } else {
+                return '2';
+            }
+        }
+
+        foreach ($users as &$user) {
+            User::create([
+                'name' => ucfirst($user),
+                'email' => $user . '@erdert.com',
+                'password' => Hash::make('password'),
+                'role' => createRole($user),
+            ]);
+        }
     }
 }
