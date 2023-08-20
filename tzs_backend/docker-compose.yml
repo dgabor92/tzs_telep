@@ -4,7 +4,6 @@ services:
         platform: linux/arm64/v8
         build:
             context: ./
-            # target: dev
             dockerfile: Dockerfile.local
         volumes:
             - .:/var/www/html/backend
