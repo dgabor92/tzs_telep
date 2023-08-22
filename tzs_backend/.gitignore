@@ -35,6 +35,7 @@ public_html/storage
 public_html/hot
 
 storage/*.key
+mysql.env
 .env
 .env.production
 Homestead.yaml

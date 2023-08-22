@@ -22,6 +22,7 @@ RUN chmod 0755 /usr/bin/composer
 # Node
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
+RUN apt-get install -y npm
 
 # Zip
 RUN apt-get install -y libzip-dev zip && docker-php-ext-configure zip && docker-php-ext-install zip
