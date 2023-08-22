@@ -38,4 +38,4 @@ RUN apt-get -y autoremove
 WORKDIR /var/www/html/erdert
 
 # Installing dependencies
-RUN composer install
+# RUN composer install
