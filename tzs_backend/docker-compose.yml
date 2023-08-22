@@ -49,3 +49,5 @@ services:
 networks:
     laravel:
         driver: bridge
+volumes:
+    docker/data/mysql:
