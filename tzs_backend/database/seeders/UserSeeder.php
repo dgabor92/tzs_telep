@@ -20,16 +20,6 @@ class UserSeeder extends Seeder
         User::truncate();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $faker = \Faker\Factory::create();
-
-        // $password = Hash::make('password');
-
-        // User::create([
-        //     'name' => 'Admin',
-        //     'email' => 'super@admin.com',
-        //     'password' => $password,
-        //     'role' => '1',
-        // ]);
         $users = ['admin', 'beata', 'porta1'];
 
         function createRole($user)
