@@ -19,6 +19,10 @@ RUN apt-get install -y libcurl3-dev curl && docker-php-ext-install curl
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 RUN chmod 0755 /usr/bin/composer
 
+# Node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
+
 # Zip
 RUN apt-get install -y libzip-dev zip && docker-php-ext-configure zip && docker-php-ext-install zip
 
@@ -36,6 +40,3 @@ RUN apt-get -y autoremove
 
 # create app directory
 WORKDIR /var/www/html/erdert
-
-# Installing dependencies
-# RUN composer install
