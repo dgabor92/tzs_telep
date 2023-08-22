@@ -29,9 +29,7 @@ services:
         ports:
             - '3307:3306'
         volumes:
-            - type: volume
-              source: TZS_DATA
-              target: /db/data/mysql
+            - docker/data/mysql:/var/lib/mysql
         networks:
             - laravel
     traefik:
@@ -51,6 +49,3 @@ services:
 networks:
     laravel:
         driver: bridge
-volumes:
-    TZS_DATA:
-        name: TZS_DATA
