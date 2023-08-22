@@ -81,6 +81,11 @@
                     </li>
 
                     <li v-if="[1].includes($store.getters['auth/user'].role)" class="nav-item">
+                        <router-link :to="{ name: 'addUser', params: { id: currCountry } }" active-class="active">
+                            Add User
+                        </router-link>
+                    </li>
+                    <li v-if="[1].includes($store.getters['auth/user'].role)" class="nav-item">
                         <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Excel Export
                         </a>
@@ -101,10 +106,6 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                         >
-                            <!-- <img
-                :src="user.photo_url"
-                class="rounded-circle profile-photo mr-1"
-              /> -->
                             {{ user.name }}
                         </a>
                         <div class="dropdown-menu">
