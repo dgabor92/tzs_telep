@@ -16,11 +16,10 @@ services:
         env_file:
             - .env.production
         networks:
-            - laravel
+            - traefik-public
         command: sh -c 'npm install && composer install && php artisan serve --host 0.0.0.0 && npm run watch'
         depends_on:
             - mysql
-            - traefik
     mysql:
         image: mysql
         container_name: tzs_db
@@ -31,21 +30,7 @@ services:
         volumes:
             - ./docker/data/mysql:/var/lib/mysql
         networks:
-            - laravel
-    traefik:
-        image: traefik:v2.9
-        container_name: tzs_traefik
-        command: --api.insecure=true --providers.docker
-        ports:
-            - '80:80'
-            - '8080:8080'
-            - '443:443'
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-        labels:
-            - 'traefik.http.routers.traefik.rule=Host(`traefik.erdert.dndnew.hu`)'
-        networks:
-            - laravel
+            - traefik-public
 networks:
-    laravel:
-        driver: bridge
+    traefik-public:
+        external: true
