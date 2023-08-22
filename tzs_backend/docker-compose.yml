@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     backend:
-        platform: linux/arm64/v8
+        # platform: linux/arm64/v8
         build:
             context: ./
             dockerfile: Dockerfile.local
@@ -22,7 +22,7 @@ services:
             - mysql
     mysql:
         image: mysql
-        platform: linux/arm64 #this will need to solve problem on M1 chip MAC
+        # platform: linux/arm64 #this will need to solve problem on M1 chip MAC
         container_name: tzs_db
         restart: unless-stopped
         environment:
