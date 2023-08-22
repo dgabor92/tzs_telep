@@ -9,7 +9,7 @@ services:
             - .:/var/www/html/erdert
             - .env.production:/var/www/html/erdert/.env
         labels:
-            - 'traefik.http.routers.backend.rule=Host(`backend.localhost`)'
+            - 'traefik.http.routers.backend.rule=Host(`erdert.dndnew.hu`)'
             # - 'traefik.http.routers.backend.rule=(Host(`backend.localhost`) && PathPrefix(`/api`))' if you want to use /api as prefix
         ports:
             - '8000:8000'
@@ -44,6 +44,8 @@ services:
             - '443:443'
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+        labels:
+            - 'traefik.http.routers.traefik.rule=Host(`traefik.erdert.dndnew.hu`)'
         networks:
             - laravel
 networks:
