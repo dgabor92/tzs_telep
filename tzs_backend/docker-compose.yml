@@ -29,7 +29,7 @@ services:
         ports:
             - '3307:3306'
         volumes:
-            - docker/data/mysql:/var/lib/mysql
+            - ./docker/data/mysql:/var/lib/mysql
         networks:
             - laravel
     traefik:
@@ -49,5 +49,3 @@ services:
 networks:
     laravel:
         driver: bridge
-volumes:
-    docker/data/mysql:
