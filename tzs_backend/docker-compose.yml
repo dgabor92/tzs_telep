@@ -9,8 +9,10 @@ services:
             - .:/var/www/html/erdert
             - .env.production:/var/www/html/erdert/.env
         labels:
+            - 'traefik.enable=true'
             - 'traefik.http.routers.backend.rule=Host(`erdert.dndnew.hu`)'
-            # - 'traefik.http.routers.backend.rule=(Host(`backend.localhost`) && PathPrefix(`/api`))' if you want to use /api as prefix
+            - 'traefik.http.routers.backend.entrypoints=websecure'
+            - 'traefik.http.routers.backend.tls.certresolver=myresolver'
         ports:
             - '8000:8000'
         env_file:
