@@ -1,19 +1,19 @@
-{{-- @php
+@php
 $config = [
     'appName' => config('app.name'),
     'locale' => $locale = app()->getLocale(),
     'locales' => config('app.locales'),
     'githubAuth' => config('services.github.client_id'),
 ];
-@endphp --}}
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
   <link rel="icon" href="/images/erdert.png">
-  <title>Erdert Tuzsér</title>
+  <title>{{ config('app.name') }}</title>
 
 </head>
 <body>
@@ -21,7 +21,7 @@ $config = [
 
   {{-- Global configuration object --}}
   <script>
-    // window.config = @json($config);
+    window.config = @json($config);
   </script>
 
   {{-- Load the application scripts --}}
