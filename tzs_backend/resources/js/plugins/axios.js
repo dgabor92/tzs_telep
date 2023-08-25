@@ -1,31 +1,31 @@
-import axios from 'axios'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import store from '~/store'
-import router from '~/router'
-import i18n from '~/plugins/i18n'
+import axios from 'axios';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import store from '~/store';
+import router from '~/router';
+import i18n from '~/plugins/i18n';
 
 // Request interceptor
 axios.interceptors.request.use((request) => {
-    const token = store.getters['auth/token']
+    const token = store.getters['auth/token'];
     if (token) {
-        request.headers.common.Authorization = `Bearer ${token}`
+        request.headers.common.Authorization = `Bearer ${token}`;
     }
 
-    const locale = store.getters['lang/locale']
+    const locale = store.getters['lang/locale'];
     if (locale) {
-        request.headers.common['Accept-Language'] = locale
+        request.headers.common['Accept-Language'] = locale;
     }
 
     // request.headers['X-Socket-Id'] = Echo.socketId()
 
-    return request
-})
+    return request;
+});
 
 // Response interceptor
 axios.interceptors.response.use(
     (response) => response,
     (error) => {
-        const { status } = error.response
+        const { status } = error.response;
 
         if (status === 401 && store.getters['auth/check']) {
             Swal.fire({
@@ -36,33 +36,33 @@ axios.interceptors.response.use(
                 confirmButtonText: i18n.t('ok'),
                 cancelButtonText: i18n.t('cancel'),
             }).then(() => {
-                store.commit('auth/LOGOUT')
+                store.commit('auth/LOGOUT');
 
-                router.push({ name: 'login' })
-            })
+                router.push({ name: 'login' });
+            });
         }
 
         if (status >= 500) {
-            serverError(error.response)
+            serverError(error.response);
         }
 
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
-)
+);
 
-let serverErrorModalShown = false
+let serverErrorModalShown = false;
 async function serverError(response) {
     if (serverErrorModalShown) {
-        return
+        return;
     }
 
     if ((response.headers['content-type'] || '').includes('text/html')) {
-        const iframe = document.createElement('iframe')
+        const iframe = document.createElement('iframe');
 
         if (response.data instanceof Blob) {
-            iframe.srcdoc = await response.data.text()
+            iframe.srcdoc = await response.data.text();
         } else {
-            iframe.srcdoc = response.data
+            iframe.srcdoc = response.data;
         }
 
         Swal.fire({
@@ -70,13 +70,13 @@ async function serverError(response) {
             showConfirmButton: false,
             customClass: { container: 'server-error-modal' },
             didDestroy: () => {
-                serverErrorModalShown = false
+                serverErrorModalShown = false;
             },
             grow: 'fullscreen',
             padding: 0,
-        })
+        });
 
-        serverErrorModalShown = true
+        serverErrorModalShown = true;
     } else {
         Swal.fire({
             icon: 'error',
@@ -85,6 +85,6 @@ async function serverError(response) {
             reverseButtons: true,
             confirmButtonText: i18n.t('ok'),
             cancelButtonText: i18n.t('cancel'),
-        })
+        });
     }
 }

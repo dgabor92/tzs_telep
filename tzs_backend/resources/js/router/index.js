@@ -1,24 +1,24 @@
-import Vue from 'vue'
-import store from '~/store'
-import Meta from 'vue-meta'
-import routes from './routes'
-import Router from 'vue-router'
-import { sync } from 'vuex-router-sync'
+import Vue from 'vue';
+import store from '~/store';
+import Meta from 'vue-meta';
+import routes from './routes';
+import Router from 'vue-router';
+import { sync } from 'vuex-router-sync';
 
-Vue.use(Meta)
-Vue.use(Router)
+Vue.use(Meta);
+Vue.use(Router);
 
 // The middleware for every page of the application.
-const globalMiddleware = ['locale', 'check-auth']
+const globalMiddleware = ['locale', 'check-auth'];
 
 // Load middleware modules dynamically.
-const routeMiddleware = resolveMiddleware(require.context('~/middleware', false, /.*\.js$/))
+const routeMiddleware = resolveMiddleware(require.context('~/middleware', false, /.*\.js$/));
 
-const router = createRouter()
+const router = createRouter();
 
-sync(store, router)
+sync(store, router);
 
-export default router
+export default router;
 
 /**
  * Create a new router instance.
@@ -30,12 +30,12 @@ function createRouter() {
         scrollBehavior,
         mode: 'history',
         routes,
-    })
+    });
 
-    router.beforeEach(beforeEach)
-    router.afterEach(afterEach)
+    router.beforeEach(beforeEach);
+    router.afterEach(afterEach);
 
-    return router
+    return router;
 }
 
 /**
@@ -46,42 +46,42 @@ function createRouter() {
  * @param {Function} next
  */
 async function beforeEach(to, from, next) {
-    let components = []
+    let components = [];
 
     try {
         // Get the matched components and resolve them.
-        components = await resolveComponents(router.getMatchedComponents({ ...to }))
+        components = await resolveComponents(router.getMatchedComponents({ ...to }));
     } catch (error) {
         if (/^Loading( CSS)? chunk (\d)+ failed\./.test(error.message)) {
-            window.location.reload(true)
-            return
+            window.location.reload(true);
+            return;
         }
     }
 
     if (components.length === 0) {
-        return next()
+        return next();
     }
 
     // Start the loading bar.
     if (components[components.length - 1].loading !== false) {
-        router.app.$nextTick(() => router.app.$loading.start())
+        router.app.$nextTick(() => router.app.$loading.start());
     }
 
     // Get the middleware for all the matched components.
-    const middleware = getMiddleware(components)
+    const middleware = getMiddleware(components);
 
     // Load async data for all the matched components.
-    await asyncData(components)
+    await asyncData(components);
 
     // Call each middleware.
     callMiddleware(middleware, to, from, (...args) => {
         // Set the application layout only if "next()" was called with no args.
         if (args.length === 0) {
-            router.app.setLayout(components[0].layout || '')
+            router.app.setLayout(components[0].layout || '');
         }
 
-        next(...args)
-    })
+        next(...args);
+    });
 }
 
 /**
@@ -90,27 +90,27 @@ async function beforeEach(to, from, next) {
  */
 async function asyncData(components) {
     for (let i = 0; i < components.length; i++) {
-        const component = components[i]
+        const component = components[i];
 
         if (!component.asyncData) {
-            continue
+            continue;
         }
 
-        const dataFn = component.data
+        const dataFn = component.data;
 
         try {
-            const asyncData = await component.asyncData()
+            const asyncData = await component.asyncData();
 
             component.data = function () {
                 return {
                     ...(dataFn ? dataFn.apply(this) : {}),
                     ...asyncData,
-                }
-            }
+                };
+            };
         } catch (e) {
-            component.layout = 'error'
+            component.layout = 'error';
 
-            console.error('Failed to load asyncData', e)
+            console.error('Failed to load asyncData', e);
         }
     }
 }
@@ -123,9 +123,9 @@ async function asyncData(components) {
  * @param {Function} next
  */
 async function afterEach(to, from, next) {
-    await router.app.$nextTick()
+    await router.app.$nextTick();
 
-    router.app.$loading.finish()
+    router.app.$loading.finish();
 }
 
 /**
@@ -137,30 +137,30 @@ async function afterEach(to, from, next) {
  * @param {Function} next
  */
 function callMiddleware(middleware, to, from, next) {
-    const stack = middleware.reverse()
+    const stack = middleware.reverse();
 
     const _next = (...args) => {
         // Stop if "_next" was called with an argument or the stack is empty.
         if (args.length > 0 || stack.length === 0) {
             if (args.length > 0) {
-                router.app.$loading.finish()
+                router.app.$loading.finish();
             }
 
-            return next(...args)
+            return next(...args);
         }
 
-        const { middleware, params } = parseMiddleware(stack.pop())
+        const { middleware, params } = parseMiddleware(stack.pop());
 
         if (typeof middleware === 'function') {
-            middleware(to, from, _next, params)
+            middleware(to, from, _next, params);
         } else if (routeMiddleware[middleware]) {
-            routeMiddleware[middleware](to, from, _next, params)
+            routeMiddleware[middleware](to, from, _next, params);
         } else {
-            throw Error(`Undefined middleware [${middleware}]`)
+            throw Error(`Undefined middleware [${middleware}]`);
         }
-    }
+    };
 
-    _next()
+    _next();
 }
 
 /**
@@ -169,12 +169,12 @@ function callMiddleware(middleware, to, from, next) {
  */
 function parseMiddleware(middleware) {
     if (typeof middleware === 'function') {
-        return { middleware }
+        return { middleware };
     }
 
-    const [name, params] = middleware.split(':')
+    const [name, params] = middleware.split(':');
 
-    return { middleware: name, params }
+    return { middleware: name, params };
 }
 
 /**
@@ -186,9 +186,9 @@ function parseMiddleware(middleware) {
 function resolveComponents(components) {
     return Promise.all(
         components.map((component) => {
-            return typeof component === 'function' ? component() : component
+            return typeof component === 'function' ? component() : component;
         })
-    )
+    );
 }
 
 /**
@@ -198,19 +198,19 @@ function resolveComponents(components) {
  * @return {Array}
  */
 function getMiddleware(components) {
-    const middleware = [...globalMiddleware]
+    const middleware = [...globalMiddleware];
 
     components
         .filter((c) => c.middleware)
         .forEach((component) => {
             if (Array.isArray(component.middleware)) {
-                middleware.push(...component.middleware)
+                middleware.push(...component.middleware);
             } else {
-                middleware.push(component.middleware)
+                middleware.push(component.middleware);
             }
-        })
+        });
 
-    return middleware
+    return middleware;
 }
 
 /**
@@ -225,24 +225,24 @@ function getMiddleware(components) {
  */
 function scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-        return savedPosition
+        return savedPosition;
     }
 
     if (to.hash) {
-        return { selector: to.hash }
+        return { selector: to.hash };
     }
 
-    const [component] = router.getMatchedComponents({ ...to }).slice(-1)
+    const [component] = router.getMatchedComponents({ ...to }).slice(-1);
 
     if (component && component.scrollToTop === false) {
-        return {}
+        return {};
     }
 
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve({ x: 0, y: 0 })
-        }, 190)
-    })
+            resolve({ x: 0, y: 0 });
+        }, 190);
+    });
 }
 
 /**
@@ -253,5 +253,5 @@ function resolveMiddleware(requireContext) {
     return requireContext
         .keys()
         .map((file) => [file.replace(/(^.\/)|(\.js$)/g, ''), requireContext(file)])
-        .reduce((guards, [name, guard]) => ({ ...guards, [name]: guard.default }), {})
+        .reduce((guards, [name, guard]) => ({ ...guards, [name]: guard.default }), {});
 }
