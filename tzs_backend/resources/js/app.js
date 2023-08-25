@@ -45,26 +45,5 @@ Vue.mixin({
     computed: mapGetters({
         user: 'auth/user',
     }),
-    methods: {
-        getCountryByID() {
-            var tempName = ''
-            for (var i = 0; i < window.countryArr.length; i++) {
-                if (window.countryArr[i].id == this.$route.params.id) {
-                    tempName = window.countryArr[i].name
-                    break
-                }
-            }
-            return tempName
-        },
-        getMaxAdByID() {
-            var tempNum = ''
-            for (var i = 0; i < window.countryArr.length; i++) {
-                if (window.countryArr[i].id == this.$route.params.id) {
-                    tempNum = window.countryArr[i].num_ads
-                    break
-                }
-            }
-            return tempNum
-        },
-    },
+    methods: {},
 })
