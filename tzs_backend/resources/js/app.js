@@ -13,14 +13,12 @@ import '@mdi/font/css/materialdesignicons.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import QuickEdit from 'vue-quick-edit'
 
 import { mapGetters } from 'vuex'
 
 library.add(faTrash, faEdit)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('quick-edit', QuickEdit)
 
 Vue.use(Vuetify, {
     icons: {
