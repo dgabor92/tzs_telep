@@ -10,16 +10,12 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 import '@mdi/font/css/materialdesignicons.css'
-import '@mdi/font/css/materialdesignicons.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import QuickEdit from 'vue-quick-edit'
-import VueVideoPlayer from 'vue-video-player'
-// import 'video.js/dist/video-js.css'
 
 import { mapGetters } from 'vuex'
-import axios from 'axios'
 
 library.add(faTrash, faEdit)
 
@@ -31,7 +27,6 @@ Vue.use(Vuetify, {
         iconfont: 'mdi',
     },
 })
-Vue.use(VueVideoPlayer)
 
 Vue.config.productionTip = false
 
