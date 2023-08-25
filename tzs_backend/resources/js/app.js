@@ -10,13 +10,9 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 import '@mdi/font/css/materialdesignicons.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { mapGetters } from 'vuex'
-
-library.add(faTrash, faEdit)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -30,7 +26,6 @@ Vue.config.productionTip = false
 
 const vuetify = new Vuetify()
 
-/* eslint-disable no-new */
 new Vue({
     el: '#app',
     i18n,
