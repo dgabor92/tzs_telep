@@ -19,8 +19,8 @@ services:
             - .env.production
         networks:
             - traefik-public
-        # command: sh -c 'npm install && composer install && php artisan serve --host 0.0.0.0 && npm run watch'
-        command: sh -c 'php artisan serve --host 0.0.0.0 && npm run watch'
+        command: sh -c 'npm install --force && composer install && php artisan serve --host 0.0.0.0 && npm run watch'
+        # command: sh -c 'php artisan serve --host 0.0.0.0 && npm run watch'
         depends_on:
             - mysql
     mysql:
