@@ -41,3 +41,9 @@ RUN apt-get -y autoremove
 
 # create app directory
 WORKDIR /var/www/html/erdert
+
+COPY package.json /var/www/html/erdert
+
+RUN npm install
+
+COPY . /var/www/html/erdert
